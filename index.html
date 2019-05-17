@@ -1,20 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
 	<title></title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 <script src="pixi.min.js"></script>
 <script>
-	let app = new PIXI.Application({width: window.innerWidth, height: window.innerHeight});
+	function iniP()
+	{
+		let app = new PIXI.Application({width: window.innerWidth, height: window.innerHeight});
 	
-	document.body.appendChild(app.view);
+		document.body.appendChild(app.view);
 
-	let img=new PIXI.Sprite.from("water.jpg");
-	img.width=window.innerWidth;
-	img.height=window.innerHeight;
-	app.stage.addChild(img);
+		let img=new PIXI.Sprite.from("water.jpg");
+		img.width=window.innerWidth;
+		img.height=window.innerHeight;
+		app.stage.addChild(img);
 
+		displacementSprite= new PIXI.Sprite.from("water-map.jpg");
+		displacementFilter= new PIXI.filters.DisplacementFilter(displacementSprite);
+		displacementSprite.texture.baseTexture.wrapMode= PIXI.WRAP_MODES.REPEAT;
+		app.stage.addChild(displacementSprite);
+		app.stage.filters=[displacementFilter];
+		
+		app.renderer.view.style.transform='scale(1.02)';
+		displacementSprite.x=4;
+		displacementSprite.y=4;
+
+		animar();
+	}
+
+	function animar()
+		{
+			displacementSprite.x+=10;
+			displacementSprite.y+=4;
+			requestAnimationFrame(animar);
+		}
+
+	iniP();
 </script>
 </body>
 </html>
